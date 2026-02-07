@@ -1,6 +1,4 @@
-import {initialState} from './State';
-
-
+import { initialState } from './State';
 
 const doctorHandlers = {
   GET_DOCTORS: (state, action) => ({
@@ -31,6 +29,10 @@ const doctorHandlers = {
     ...state,
     loadingDoctorReviews: action.payload,
   }),
+  GET_DOCTOR_PROFILE: (state, action) => ({
+    ...state,
+    doctorProfile: action.payload,
+  }),
   RESET_DOCTOR_DETAILS: (state, action) => ({
     ...state,
     doctorDetails: null,
@@ -40,8 +42,8 @@ const doctorHandlers = {
   }),
 };
 
-const  Reducer = (state, action) => {
-  const handler= doctorHandlers[action.type];
+const Reducer = (state, action) => {
+  const handler = doctorHandlers[action.type];
   return handler ? handler(state, action) : state;
 };
 

@@ -30,7 +30,14 @@ const DashboardScreen = ({ navigation }) => {
     categories: { getCategories, categories },
     notifications: { getNotifications },
     bookings: { appointments: appointmentList, getAppointments },
+    doctors: { getDoctorProfile, doctorProfile },
   } = useContext(Context);
+
+  useEffect(() => {
+    if (!doctorProfile) {
+      getDoctorProfile();
+    }
+  }, [doctorProfile]);
 
   useEffect(() => {
     if (socketMessages?.length > 0) {
@@ -92,7 +99,7 @@ const DashboardScreen = ({ navigation }) => {
   }, [appointmentList]);
 
   const userData = storageValues.userData ?? {};
-  const userName = userData?.user?.full_name ?? 'Hari';
+  const userName = doctorProfile?.name ?? userData?.user?.full_name ?? 'Hari';
   const location = userData?.location ?? userData?.city ?? 'Hyderabad';
   const handleLocationPress = () => {
     console.log('Location pressed');
@@ -234,7 +241,7 @@ const DashboardScreen = ({ navigation }) => {
           <View style={styles.searchBarContainer}>
             <SearchBar placeholder="Search" onSearch={handleSearch} />
           </View>
-          <PromotionSlider promotions={promotions} />
+          {/* <PromotionSlider promotions={promotions} /> */}
           <DashboardStats
             upcomingAppointments={upcomingCount}
             patientToday={patientTodayCount}

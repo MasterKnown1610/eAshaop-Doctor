@@ -34,16 +34,24 @@ const GENDER_OPTIONS = [
 ];
 
 const SPECIALITY_OPTIONS = [
-  { label: 'Cardiology', value: 'Cardiology' },
-  { label: 'Dermatology', value: 'Dermatology' },
-  { label: 'Pediatrics', value: 'Pediatrics' },
-  { label: 'Orthopedics', value: 'Orthopedics' },
-  { label: 'Neurology', value: 'Neurology' },
+  { label: 'General Physician', value: 'UqkGTNQTOD' },
+  { label: 'Cardiologist', value: 'bD1KuA_6pr' },
+  { label: 'Orthopedic', value: 'oybWOH7Ok8' },
+  { label: 'Neurologist', value: 'r1ArfRKaU_' },
+  { label: 'Ophthalmology', value: 'whHEP4Ba-m' },
+  { label: 'ENT Specialist', value: '4A31RiqS_M' },
+  { label: 'Dentist', value: 'u3bp-C0G4f' },
+  { label: 'Psychiatrist', value: 'Psych_01' },
+  { label: 'Pediatrician', value: 'Ped_01' },
+  { label: 'Dermatologist', value: 'DrmtLgst_01' },
+  { label: 'Physiotherapist', value: 'PhyThr_01' },
+  { label: 'Urologist', value: 'Urolgst_01' },
+  { label: 'Gynaecologist', value: 'Gynclgst_01' },
 ];
 
 const CONSULTANT_MODE_OPTIONS = [
-  { label: 'Online', value: 'Online' },
-  { label: 'Offline', value: 'Offline' },
+  { label: 'Video Consultation', value: 'Video Consultation' },
+  { label: 'Clinic Visit', value: 'Clinic Visit' },
   { label: 'Both', value: 'Both' },
 ];
 
@@ -230,8 +238,10 @@ const SignUpScreen = () => {
       return;
     }
 
-    // Navigate to Step 2 or proceed with registration
-    // For now, we'll navigate to OTP screen with the data
+    const specialityname = SPECIALITY_OPTIONS.find(
+      option => option.value === speciality,
+    )?.label;
+
     const payload = {
       first_name: firstName.trim(),
       age: age.trim(),
@@ -239,7 +249,8 @@ const SignUpScreen = () => {
       qualification: qualification.trim(),
       years_of_experience: yearsOfExperience.trim(),
       areas_of_expertise: areasOfExpertise.trim(),
-      speciality,
+      speciality: specialityname,
+      categoryUuid: speciality,
       gender,
       consultant_mode: consultantMode,
       phone_number: phoneNumber.trim(),
@@ -258,14 +269,6 @@ const SignUpScreen = () => {
       email: email.trim(),
       phone: phoneNumber.trim(),
     });
-    // if (response?.status >= 200 && response?.status < 300) {
-
-    // } else {
-    //   setLoading(false);
-    //   toast.error(
-    //     response?.data?.message ?? 'Failed to verify email and phone',
-    //   );
-    // }
 
     setLoading(false);
     navigation.navigate('SignUpStep2', {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   ScrollView,
@@ -7,15 +7,26 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {colors} from '../../theme/colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { colors } from '../../theme/colors';
 import Text from '../../components/ui/Text';
 import SearchBar from '../../components/common/SearchBar';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Context from '../../context/Context';
 
-const PatientsScreen = ({navigation}) => {
+const PatientsScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
+  const {
+    bookings: { getAppointments, appointments, loadingAppointments },
+  } = useContext(Context);
+
+  useEffect(() => {
+    getAppointments();
+  }, []);
+
+  console.log(appointments, 'this is the appointments');
 
   // Sample patients data
   const defaultPatients = [
@@ -85,10 +96,14 @@ const PatientsScreen = ({navigation}) => {
     },
   ];
 
-  const [patients] = useState(defaultPatients);
+  let data = appointments?.past?.map(appointment => ({
+    id: appointment?._id,
+    name: appointment?.userId?.full_name,
+    lastVisit: appointment?.date,
+  }));
 
   // Filter patients based on search
-  const filteredPatients = patients.filter(patient => {
+  const filteredPatients = data?.filter(patient => {
     if (!searchText) return true;
     const searchLower = searchText.toLowerCase();
     return (
@@ -103,19 +118,19 @@ const PatientsScreen = ({navigation}) => {
     console.log('Patient pressed:', patient);
     // navigation.navigate('PatientDetails', { patient });
     // Or navigate to Digital Prescription
-    navigation.navigate('DigitalPrescription', {patient});
+    navigation.navigate('DigitalPrescription', { patient });
   };
 
-  const renderPatientItem = ({item}) => (
+  const renderPatientItem = ({ item }) => (
     <TouchableOpacity
       style={styles.patientItem}
       onPress={() => handlePatientPress(item)}
-      activeOpacity={0.7}>
-      {/* Profile Image */}
+      activeOpacity={0.7}
+    >
       <View style={styles.imageContainer}>
         {item.image ? (
           <Image
-            source={{uri: item.image}}
+            source={{ uri: item.image }}
             style={styles.patientImage}
             resizeMode="cover"
           />
@@ -131,9 +146,7 @@ const PatientsScreen = ({navigation}) => {
         <Text variant="h6" style={styles.patientName}>
           {item.name}
         </Text>
-        <Text variant="bodySmall" style={styles.patientDemographics}>
-          {item.age} years. {item.gender}
-        </Text>
+
         <Text variant="bodySmall" style={styles.lastVisit}>
           Last visit: {item.lastVisit}
         </Text>
@@ -163,18 +176,25 @@ const PatientsScreen = ({navigation}) => {
       </View>
 
       {/* Patients List */}
-      <FlatList
-        data={filteredPatients}
-        renderItem={renderPatientItem}
-        keyExtractor={item => item.id}
-        contentContainerStyle={styles.listContent}
-        showsVerticalScrollIndicator={false}
-        ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>No patients found</Text>
-          </View>
-        }
-      />
+      {loadingAppointments ? (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color={colors.primary} />
+          <Text style={styles.loaderText}>Loading patients...</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={filteredPatients}
+          renderItem={renderPatientItem}
+          keyExtractor={item => item.id}
+          contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>No patients found</Text>
+            </View>
+          }
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -249,6 +269,17 @@ const styles = StyleSheet.create({
   emptyText: {
     color: colors.textSecondary,
     fontSize: 16,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 60,
+  },
+  loaderText: {
+    marginTop: 12,
+    color: colors.textSecondary,
+    fontSize: 14,
   },
 });
 

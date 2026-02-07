@@ -1,7 +1,6 @@
-
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import DashboardScreen from '../screens/Home/DashboardScreen';
 import DoctorsScreen from '../screens/Home/DoctorsScreen';
 import DoctorDetailsScreen from '../screens/Home/DoctorDetailsScreen';
@@ -16,8 +15,12 @@ import SetAvailabilityScreen from '../screens/Home/SetAvailabilityScreen';
 import DigitalPrescriptionScreen from '../screens/Home/DigitalPrescriptionScreen';
 import PatientsScreen from '../screens/Home/PatientsScreen';
 import CallScreen from '../screens/Home/CallScreen';
+import PrivacyPolicyScreen from '../screens/Home/PrivacyPolicyScreen';
+import HelpCenterScreen from '../screens/Home/HelpCenterScreen';
+import ReviewsAndRecordsScreen from '../screens/Home/ReviewsAndRecordsScreen';
+import ProfileScreen from '../screens/Home/ProfileScreen';
 import ProfileDrawerContent from '../components/common/ProfileDrawerContent';
-import {colors} from '../theme/colors';
+import { colors } from '../theme/colors';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -28,11 +31,12 @@ const MainStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-      }}>
+      }}
+    >
       <Stack.Screen name="DashboardMain" component={DashboardScreen} />
-      <Stack.Screen 
-        name="Doctors" 
-        component={DoctorsScreen} 
+      <Stack.Screen
+        name="Doctors"
+        component={DoctorsScreen}
         options={{
           headerShown: true,
           title: 'Doctors',
@@ -46,9 +50,9 @@ const MainStack = () => {
           headerBackTitle: 'Back',
         }}
       />
-      <Stack.Screen 
-        name="DoctorDetails" 
-        component={DoctorDetailsScreen} 
+      <Stack.Screen
+        name="DoctorDetails"
+        component={DoctorDetailsScreen}
         options={{
           headerShown: true,
           title: 'Doctor Details',
@@ -62,9 +66,9 @@ const MainStack = () => {
           headerBackTitle: 'Back',
         }}
       />
-      <Stack.Screen 
-        name="ReviewSummary" 
-        component={ReviewSummaryScreen} 
+      <Stack.Screen
+        name="ReviewSummary"
+        component={ReviewSummaryScreen}
         options={{
           headerShown: true,
           title: 'Review Summary',
@@ -79,9 +83,9 @@ const MainStack = () => {
           headerShadowVisible: false,
         }}
       />
-      <Stack.Screen 
-        name="MyAppointments" 
-        component={MyAppointmentsScreen} 
+      <Stack.Screen
+        name="MyAppointments"
+        component={MyAppointmentsScreen}
         options={{
           headerShown: true,
           title: 'My Appointments',
@@ -95,9 +99,9 @@ const MainStack = () => {
           headerBackTitle: 'Back',
         }}
       />
-      <Stack.Screen 
-        name="CancelAppointment" 
-        component={CancelAppointmentScreen} 
+      <Stack.Screen
+        name="CancelAppointment"
+        component={CancelAppointmentScreen}
         options={{
           headerShown: true,
           title: 'Cancel Appointment',
@@ -111,9 +115,9 @@ const MainStack = () => {
           headerBackTitle: 'Back',
         }}
       />
-      <Stack.Screen 
-        name="Notifications" 
-        component={NotificationsScreen} 
+      <Stack.Screen
+        name="Notifications"
+        component={NotificationsScreen}
         options={{
           headerShown: true,
           title: 'Notifications',
@@ -127,9 +131,9 @@ const MainStack = () => {
           headerBackTitle: 'Back',
         }}
       />
-      <Stack.Screen 
-        name="MedicalReports" 
-        component={MedicalReportsScreen} 
+      <Stack.Screen
+        name="MedicalReports"
+        component={MedicalReportsScreen}
         options={{
           headerShown: true,
           title: 'Medical Reports',
@@ -143,9 +147,9 @@ const MainStack = () => {
           headerBackTitle: 'Back',
         }}
       />
-      <Stack.Screen 
-        name="Categories" 
-        component={CategoriesScreen} 
+      <Stack.Screen
+        name="Categories"
+        component={CategoriesScreen}
         options={{
           headerShown: true,
           title: 'Categories',
@@ -159,9 +163,9 @@ const MainStack = () => {
           headerBackTitle: 'Back',
         }}
       />
-      <Stack.Screen 
-        name="Earnings" 
-        component={EarningsScreen} 
+      <Stack.Screen
+        name="Earnings"
+        component={EarningsScreen}
         options={{
           headerShown: true,
           title: 'Earnings',
@@ -175,9 +179,9 @@ const MainStack = () => {
           headerBackTitle: 'Back',
         }}
       />
-      <Stack.Screen 
-        name="SetAvailability" 
-        component={SetAvailabilityScreen} 
+      <Stack.Screen
+        name="SetAvailability"
+        component={SetAvailabilityScreen}
         options={{
           headerShown: true,
           title: 'Set Availability',
@@ -191,9 +195,9 @@ const MainStack = () => {
           headerBackTitle: 'Back',
         }}
       />
-      <Stack.Screen 
-        name="DigitalPrescription" 
-        component={DigitalPrescriptionScreen} 
+      <Stack.Screen
+        name="DigitalPrescription"
+        component={DigitalPrescriptionScreen}
         options={{
           headerShown: true,
           title: 'Digital Prescription',
@@ -215,9 +219,73 @@ const MainStack = () => {
           gestureEnabled: false,
         }}
       />
-      <Stack.Screen 
-        name="Patients" 
-        component={PatientsScreen} 
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicyScreen}
+        options={{
+          headerShown: true,
+          title: 'Privacy & Policy',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+          headerTintColor: colors.white,
+          headerTitleStyle: {
+            fontWeight: '600',
+          },
+          headerBackTitle: 'Back',
+        }}
+      />
+      <Stack.Screen
+        name="HelpCenter"
+        component={HelpCenterScreen}
+        options={{
+          headerShown: true,
+          title: 'Help Center',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+          headerTintColor: colors.white,
+          headerTitleStyle: {
+            fontWeight: '600',
+          },
+          headerBackTitle: 'Back',
+        }}
+      />
+      <Stack.Screen
+        name="ReviewsAndRecords"
+        component={ReviewsAndRecordsScreen}
+        options={{
+          headerShown: true,
+          title: 'Reviews and Records',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+          headerTintColor: colors.white,
+          headerTitleStyle: {
+            fontWeight: '600',
+          },
+          headerBackTitle: 'Back',
+        }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          headerShown: true,
+          title: 'Profile',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+          headerTintColor: colors.white,
+          headerTitleStyle: {
+            fontWeight: '600',
+          },
+          headerBackTitle: 'Back',
+        }}
+      />
+      <Stack.Screen
+        name="Patients"
+        component={PatientsScreen}
         options={{
           headerShown: true,
           title: 'Patients',
@@ -239,7 +307,7 @@ const MainStack = () => {
 const AppStack = () => {
   return (
     <Drawer.Navigator
-      drawerContent={(props) => <ProfileDrawerContent {...props} />}
+      drawerContent={props => <ProfileDrawerContent {...props} />}
       screenOptions={{
         headerShown: false,
         drawerPosition: 'left',
@@ -248,7 +316,8 @@ const AppStack = () => {
           width: '80%',
         },
         swipeEnabled: false,
-      }}>
+      }}
+    >
       <Drawer.Screen name="Dashboard" component={MainStack} />
     </Drawer.Navigator>
   );

@@ -1,14 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useEffect, useState, useContext } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {colors} from '../../theme/colors';
+import { colors } from '../../theme/colors';
 import Text from '../ui/Text';
-import {useAuth} from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
+import Context from '../../context/Context';
 
-const ProfileDrawerContent = ({navigation}) => {
-  const {logout} = useAuth();
+const ProfileDrawerContent = ({ navigation }) => {
+  const { logout } = useAuth();
+  const {
+    doctors: { doctorProfile },
+  } = useContext(Context);
   const [userName, setUserName] = useState('Hari');
 
   useEffect(() => {
@@ -31,9 +35,9 @@ const ProfileDrawerContent = ({navigation}) => {
     loadUser();
   }, []);
 
-  const handleNavigate = (screen) => {
+  const handleNavigate = screen => {
     navigation.closeDrawer();
-    navigation.navigate('Dashboard', {screen});
+    navigation.navigate('Dashboard', { screen });
   };
 
   const menuItems = [
@@ -41,7 +45,7 @@ const ProfileDrawerContent = ({navigation}) => {
       id: 'editProfile',
       title: 'Edit Profile',
       icon: 'account-edit-outline',
-      onPress: () => {},
+      onPress: () => handleNavigate('Profile'),
     },
     {
       id: 'payments',
@@ -65,19 +69,19 @@ const ProfileDrawerContent = ({navigation}) => {
       id: 'privacyPolicy',
       title: 'Privacy & Policy',
       icon: 'file-document-outline',
-      onPress: () => {},
+      onPress: () => handleNavigate('PrivacyPolicy'),
     },
     {
       id: 'helpCenter',
       title: 'Help Center',
       icon: 'help-circle-outline',
-      onPress: () => {},
+      onPress: () => handleNavigate('HelpCenter'),
     },
     {
       id: 'reviewsAndRecords',
       title: 'Reviews and Records',
       icon: 'star-outline',
-      onPress: () => {},
+      onPress: () => handleNavigate('ReviewsAndRecords'),
     },
   ];
 
@@ -98,9 +102,9 @@ const ProfileDrawerContent = ({navigation}) => {
         </View>
         <View style={styles.profileInfo}>
           <Text variant="h4" style={styles.userName}>
-            {userName}
+            {doctorProfile?.name ?? userName}
           </Text>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => handleNavigate('Profile')}>
             <Text variant="bodySmall" style={styles.editProfileText}>
               View and edit profile
             </Text>
@@ -113,12 +117,13 @@ const ProfileDrawerContent = ({navigation}) => {
 
       {/* Menu Items */}
       <View style={styles.menuContainer}>
-        {menuItems.map((item) => (
+        {menuItems.map(item => (
           <TouchableOpacity
             key={item.id}
             style={styles.menuItem}
             onPress={item.onPress}
-            activeOpacity={0.7}>
+            activeOpacity={0.7}
+          >
             <Icon name={item.icon} size={24} color={colors.textPrimary} />
             <Text variant="body" style={styles.menuItemText}>
               {item.title}
@@ -131,7 +136,8 @@ const ProfileDrawerContent = ({navigation}) => {
         <TouchableOpacity
           style={styles.menuItem}
           onPress={handleLogout}
-          activeOpacity={0.7}>
+          activeOpacity={0.7}
+        >
           <Icon name="logout" size={24} color={colors.error} />
           <Text variant="body" style={[styles.menuItemText, styles.logoutText]}>
             Logout
@@ -144,7 +150,8 @@ const ProfileDrawerContent = ({navigation}) => {
         <TouchableOpacity
           style={styles.bottomLogoutButton}
           onPress={handleLogout}
-          activeOpacity={0.8}>
+          activeOpacity={0.8}
+        >
           <Icon name="logout" size={24} color={colors.white} />
           <Text variant="body" style={styles.bottomLogoutText}>
             Logout

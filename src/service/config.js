@@ -15,4 +15,5 @@ export const API_URLS = {
   Notifications: `${BASE_URL}/notifications`,
   /** POST /api/v1/call/end - report call ended (room_id, duration, user_id) */
   CallEnd: `${BASE_URL}/v1/call/end`,
+  DoctorProfile: `${BASE_URL}/doctors/profile`,
 };

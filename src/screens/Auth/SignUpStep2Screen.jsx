@@ -67,8 +67,6 @@ const SignUpStep2Screen = () => {
     formData.append('experience', signUpData.years_of_experience || '');
     formData.append('areaOfInterest', signUpData.areas_of_expertise || '');
     formData.append('speciality', signUpData.speciality || '');
-
-    // categoryUuid - if available in signUpData, otherwise use speciality as fallback
     if (signUpData.categoryUuid) {
       formData.append('categoryUuid', signUpData.categoryUuid);
     }
@@ -77,10 +75,8 @@ const SignUpStep2Screen = () => {
     formData.append('gender', signUpData.gender || '');
     formData.append('consultationMode', signUpData.consultant_mode || '');
 
-    // Mobile - ensure it includes country code if not already present
     let mobileNumber = signUpData.phone_number || '';
     if (mobileNumber && !mobileNumber.startsWith('+')) {
-      // Add +91 for India if not present (adjust based on your default country)
       mobileNumber = `+91${mobileNumber}`;
     }
     formData.append('mobile', mobileNumber);
@@ -183,15 +179,6 @@ const SignUpStep2Screen = () => {
     try {
       const formData = createFormData();
 
-      // Log FormData for debugging (note: FormData can't be directly logged)
-      console.log('Submitting registration with FormData...');
-
-      // Call registerUser API
-      const response = await registerDoctor(formData);
-
-      console.log('Registration response:', response);
-
-      // Navigate to OTP screen
       navigation.navigate('OTP', {
         signUpData: {
           ...signUpData,
