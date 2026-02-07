@@ -1,0 +1,4 @@
+export const CategoriesActions = {
+  SET_CATEGORIES: 'SET_CATEGORIES',
+  RESET_CATEGORIESSTATE: 'RESET_CATEGORIESSTATE',
+};
